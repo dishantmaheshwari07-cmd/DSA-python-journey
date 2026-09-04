@@ -1,0 +1,217 @@
+class node:
+	def __init__(self, data):
+		self.data = data
+		self.next = None
+		
+class circular_q:
+	def __init__(self):
+		self.front = None
+		self.rear = None
+		
+	def enqueue(self , value):
+		new_node = node(value)
+		
+		if self.rear is None:
+			new_node.next = new_node
+			self.rear = new_node
+			self.front = new_node
+			return "enqueue completed"
+		
+		self.rear.next = new_node
+		new_node.next = self.front
+		self.rear = new_node
+		return "enqueue completed"
+		
+	def dequeue(self):
+		if not self.front:
+			return "queue is empty"
+			
+		if self.rear == self.front:
+			self.rear = None
+			self.front = None
+			return "dequeue completed , queue is empty now"
+			
+		self.front = self.front.next
+		self.rear.next = self.front
+		return "dequeue is completed"
+		
+	def peek(self):
+		if not self.front:
+			return "queue is empty"
+		return self.front.data
+		
+	def is_empty(self):
+		if not self.front:
+			return "queue is empty"
+		return "queue is not empty"
+		
+	def length(self):
+		if not self.front:
+			return 0
+			
+		t1= self.front
+		count = 1
+		while t1.next != self.front:
+			count += 1
+			t1 = t1.next
+			
+		return count
+		
+	def print_data(self):
+		if not self.front:
+			return "queue is empty"
+			
+		t1 = self.front
+		while t1.next != self.front:
+			print(t1.data)
+			t1 = t1.next
+		print(t1.data)
+
+print("\n========== CIRCULAR QUEUE + LINKED LIST TESTING ==========")
+
+q = circular_q()
+
+
+# 1. Empty Queue
+print("\n--- Test 1: Empty Queue ---")
+print("is_empty:", q.is_empty())
+print("peek:", q.peek())
+print("length:", q.length())
+print("print:", q.print_data())
+
+
+# 2. Single Element
+print("\n--- Test 2: Single Element ---")
+print("enqueue:", q.enqueue(10))
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("front == rear:", q.front == q.rear)
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 3. Multiple Elements
+print("\n--- Test 3: Multiple Elements ---")
+q.enqueue(20)
+q.enqueue(30)
+q.enqueue(40)
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("front:", q.front.data)
+print("rear:", q.rear.data)
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 4. FIFO Check
+print("\n--- Test 4: FIFO Check ---")
+print("dequeue:", q.dequeue())
+print("peek after dequeue:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+
+# 5. Circular Connection After Dequeue
+print("\n--- Test 5: Circular Connection ---")
+print("front:", q.front.data)
+print("rear:", q.rear.data)
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 6. Enqueue After Dequeue
+print("\n--- Test 6: Enqueue After Dequeue ---")
+q.enqueue(50)
+q.enqueue(60)
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("rear:", q.rear.data)
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 7. Dequeue Until One Element
+print("\n--- Test 7: Dequeue Until One Element ---")
+q.dequeue()
+q.dequeue()
+q.dequeue()
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("front == rear:", q.front == q.rear)
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 8. Dequeue Last Element
+print("\n--- Test 8: Dequeue Last Element ---")
+print("dequeue:", q.dequeue())
+
+print("is_empty:", q.is_empty())
+print("length:", q.length())
+print("front:", q.front)
+print("rear:", q.rear)
+
+
+# 9. Dequeue Empty Queue
+print("\n--- Test 9: Dequeue Empty Queue ---")
+print("dequeue:", q.dequeue())
+
+
+# 10. Reuse After Empty
+print("\n--- Test 10: Reuse After Empty ---")
+q.enqueue(100)
+q.enqueue(200)
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 11. Duplicate Values
+print("\n--- Test 11: Duplicate Values ---")
+q.enqueue(200)
+q.enqueue(200)
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 12. Zero and Negative Values
+print("\n--- Test 12: Zero & Negative Values ---")
+q.enqueue(0)
+q.enqueue(-10)
+
+print("peek:", q.peek())
+print("length:", q.length())
+q.print_data()
+
+print("rear.next == front:", q.rear.next == q.front)
+
+
+# 13. Final Dequeue Until Empty
+print("\n--- Test 13: Final Dequeue Until Empty ---")
+while not q.front is None:
+    print("dequeue:", q.dequeue())
+
+print("is_empty:", q.is_empty())
+print("peek:", q.peek())
+print("length:", q.length())
+print("front:", q.front)
+print("rear:", q.rear)
+
+
+print("\n========== TESTING COMPLETE ==========")
+	
+		
+		
